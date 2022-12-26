@@ -6,26 +6,37 @@ class Postgres extends ICrud {
     super();
     this._driver = null;
     this._heroes = null;
-    this._connect();
   }
 
   async isConnected() {
     try {
       await this._driver.authenticate();
       return true;
-      
     } catch (error) {
       console.log(error);
       return error;
     }
   }
 
-  create(item) {
-    console.log("saved to the postgres db");
+  async create(item) {
+    return this._heroes.create(item);
+  }
+
+  async read(item) {
+    return this._heroes.findAll({ where: item, raw: true });
+  }
+
+  async update(id, item) {
+    return this._heroes.update(item, { where: { id } });
+  }
+
+  async delete(id) {
+    const query = id ? { id } : {};
+    return this._heroes.destroy({ where: query });
   }
 
   async defineModel() {
-    this._heroes = driver.define(
+    this._heroes = this._driver.define(
       "heroes",
       {
         id: {
@@ -50,10 +61,10 @@ class Postgres extends ICrud {
       }
     );
 
-    await Heroes.sync();
+    await this._heroes.sync();
   }
 
-  _connect() {
+  async connect() {
     this._driver = new Sequelize(
       "heroes",
       "franciscogsilverio",
@@ -65,6 +76,8 @@ class Postgres extends ICrud {
         operatorAliases: false,
       }
     );
+
+    await this.defineModel();
   }
 }
 
