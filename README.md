@@ -22,8 +22,8 @@ docker run \
 sudo docker run \
     --name mongodb \
     -p 27017:27017 \
-    -e MONGO_INIT_ROOT_USERNAME=admin \
-    -e MONGO_INITDB_ROOT_PASSWORD=secretpassword \
+    -e MONGO_INITDB_ROOT_USERNAME=admin \
+    -e MONGO_INITDB_ROOT_PASSWORD=adminpassword \
     -d \
     mongo:4
 
@@ -35,5 +35,5 @@ sudo docker run \
     mongoclient/mongoclient
 
 sudo docker exec -it mongodb \
-    mongo --host localhost -u admin -p secretpassword --authenticationDatabase admin \
-    --eval "db.getSiblingDB(''heroes').createUser({user: 'franciscogsilverio', pwd: 'minhasenhasecreta', roles: [{role: 'readWrite', db:'heroes'}]})"
+    mongo --host localhost -u admin -p adminpassword --authenticationDatabase admin \
+    --eval "db.getSiblingDB('heroes').createUser({user: 'franciscogsilverio', pwd: 'minhasenhasecreta', roles: [{role: 'readWrite', db:'heroes'}]})"
