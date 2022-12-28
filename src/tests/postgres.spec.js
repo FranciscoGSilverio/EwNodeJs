@@ -1,7 +1,7 @@
-const Postgres = require("../db/strategies/postgres");
+const Postgres = require("../db/strategies/postgres/postgres");
 const Context = require("../db/strategies/base/contextStrategy");
+const HeroSchema = require("../db/strategies/postgres/schemas/heroesSchema");
 
-const context = new Context(new Postgres());
 const MOCK_REGISTER_HERO = {
   name: "Black Adam",
   power: "Super strength",
@@ -12,9 +12,15 @@ const MOCK_UPDATED_HERO = {
   power: "Inteligence",
 };
 
+let context = {};
+
 describe("Postgres database implementation", () => {
   beforeAll(async () => {
-    await context.connect();
+    const connection = await Postgres.connect();
+    const model = await Postgres.defineModel(connection, HeroSchema);
+
+    context = new Context(new Postgres(connection, model));
+
     await context.delete();
     await context.create(MOCK_UPDATED_HERO);
   });

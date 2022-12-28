@@ -1,7 +1,6 @@
-const MongoDB = require("../db/strategies/mongo");
+const MongoDB = require("../db/strategies/mongodb/mongo");
+const HeroSchema = require("../db/strategies/mongodb/schemas/heroesSchema");
 const Context = require("../db/strategies/base/contextStrategy");
-
-const context = new Context(new MongoDB());
 
 const MOCK_REGISTERED_HERO = {
   name: "Spider Man",
@@ -15,9 +14,13 @@ const MOCK_UPDATED_HERO = {
 
 let MOCK_HERO_ID = "";
 
+let context = {};
+
 describe("Mongo Db CRUD", () => {
   beforeAll(async () => {
-    await context.connect();
+    const connection = MongoDB.connect();
+    context = new Context(new MongoDB(connection, HeroSchema));
+
     await context.create(MOCK_REGISTERED_HERO);
     const result = await context.create(MOCK_UPDATED_HERO);
 

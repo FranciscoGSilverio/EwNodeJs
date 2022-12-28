@@ -1,4 +1,4 @@
-const ICrud = require("./interfaces/interfaceCrud");
+const ICrud = require("../interfaces/interfaceCrud");
 const Mongoose = require("mongoose");
 const STATUS = {
   0: "Disconnected",
@@ -8,23 +8,23 @@ const STATUS = {
 };
 
 class MongoDB extends ICrud {
-  constructor() {
+  constructor(connection, schema) {
     super();
-    this._heroes = null;
-    this._driver = null;
+    this._schema = schema;
+    this._connection = connection;
   }
 
   async isConnected() {
-    const state = STATUS[this._driver.readyState];
+    const state = STATUS[this._connection.readyState];
     if (state === "Connected") return STATUS[1];
 
     if (state === "Connecting")
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    return STATUS[this._driver.readyState];
+    return STATUS[this._connection.readyState];
   }
 
-  connect() {
+  static connect() {
     Mongoose.connect(
       "mongodb://franciscogsilverio:minhasenhasecreta@localhost:27017/heroes",
       { useNewUrlParser: true },
@@ -36,46 +36,27 @@ class MongoDB extends ICrud {
 
     const connection = Mongoose.connection;
 
-    this._driver = connection;
-
     connection.once("open", () => console.log("database connection on"));
 
-    this.defineModel();
+    return connection;
   }
 
-  defineModel() {
-    const heroSchema = new Mongoose.Schema({
-      name: {
-        type: String,
-        required: true,
-      },
-      power: {
-        type: String,
-        required: true,
-      },
-      insertedAt: {
-        type: Date,
-        default: new Date(),
-      },
-    });
-
-    this._heroes = Mongoose.model("heroes", heroSchema);
-  }
+  defineModel() {}
 
   async create(item) {
-    return this._heroes.create(item);
+    return this._schema.create(item);
   }
 
   async read(item, skip = 0, limit = 10) {
-    return this._heroes.find(item).skip(skip).limit(limit);
+    return this._schema.find(item).skip(skip).limit(limit);
   }
 
   update(id, item) {
-    return this._heroes.updateOne({ _id: id }, { $set: item });
+    return this._schema.updateOne({ _id: id }, { $set: item });
   }
 
   delete(id) {
-    return this._heroes.deleteOne({ _id: id });
+    return this._schema.deleteOne({ _id: id });
   }
 }
 
