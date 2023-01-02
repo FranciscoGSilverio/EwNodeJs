@@ -10,8 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "hapi": "^18.1.0",
+    "@hapi/hapi": "^21.1.0",
     "jest": "^29.3.1",
+    "joi": "^17.7.0",
     "mongoose": "^6.8.1",
     "pg": "^8.8.0",
     "pg-hstore": "^2.3.4",

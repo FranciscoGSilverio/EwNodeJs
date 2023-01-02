@@ -1,4 +1,4 @@
-const Hapi = require("hapi");
+const Hapi = require("@hapi/hapi");
 const Context = require("./db/strategies/base/contextStrategy");
 const MongoDb = require("./db/strategies/mongodb/mongo");
 const HeroSchema = require("./db/strategies/mongodb/schemas/heroesSchema");
