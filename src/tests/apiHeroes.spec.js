@@ -14,13 +14,21 @@ const MOCK_DEFAULT_ADDED_HERO = {
 
 let MOCK_ID = "";
 
+const ACCESS_TOKEN =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImZyYW5jaXNjbyIsImlkIjoxLCJpYXQiOjE2NzI3NzI2MzR9.HMoA3Wsg48XY6klcEUrGuUviaaskHeL5CTh6UE8_1xU";
+
+const headers = {
+  Authorization: ACCESS_TOKEN,
+};
+
 describe("Api http server", function () {
-  this.beforeAll(async () => {
+  beforeAll(async () => {
     app = await api;
 
     const result = await app.inject({
       method: "POST",
       url: "/heroes",
+      headers,
       payload: JSON.stringify(MOCK_DEFAULT_ADDED_HERO),
     });
 
@@ -35,6 +43,7 @@ describe("Api http server", function () {
     const result = await app.inject({
       method: "GET",
       url: "/heroes",
+      headers,
     });
 
     const data = JSON.parse(result.payload);
@@ -53,6 +62,7 @@ describe("Api http server", function () {
     const result = await app.inject({
       method: "GET",
       url: `/heroes?skip=${PAGINATION_VALUES.skip}&limit=${PAGINATION_VALUES.limit}`,
+      headers,
     });
 
     const data = JSON.parse(result.payload);
@@ -71,6 +81,7 @@ describe("Api http server", function () {
     const result = await app.inject({
       method: "GET",
       url: `/heroes?skip=${INVALID_PAGINATION_VALUES.skip}&limit=${INVALID_PAGINATION_VALUES.limit}`,
+      headers,
     });
 
     const errorResult =
@@ -82,6 +93,7 @@ describe("Api http server", function () {
     const result = await app.inject({
       method: "POST",
       url: "/heroes",
+      headers,
       payload: MOCK_REGISTER_HERO,
     });
     const { _id, message } = JSON.parse(result.payload);
@@ -101,6 +113,7 @@ describe("Api http server", function () {
     const result = await app.inject({
       method: "PATCH",
       url: `/heroes/${_id}`,
+      headers,
       payload: JSON.stringify(changes),
     });
 
@@ -120,6 +133,7 @@ describe("Api http server", function () {
     const result = await app.inject({
       method: "PATCH",
       url: `/heroes/${_id}`,
+      headers,
       payload: JSON.stringify(changes),
     });
 
@@ -140,6 +154,7 @@ describe("Api http server", function () {
     const result = await app.inject({
       method: "DELETE",
       url: `/heroes/${_id}`,
+      headers,
     });
 
     const statusCode = result.statusCode;
@@ -154,6 +169,7 @@ describe("Api http server", function () {
     const result = await app.inject({
       method: "DELETE",
       url: `/heroes/${_id}`,
+      headers,
     });
 
     const data = JSON.parse(result.payload);

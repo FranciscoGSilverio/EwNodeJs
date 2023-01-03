@@ -5,6 +5,10 @@ const failAction = (request, headers, error) => {
   throw error;
 };
 
+const headers = Joi.object({
+  authorization: Joi.string().required(),
+}).unknown();
+
 class HeroRoute extends BaseRoute {
   constructor(db) {
     super();
@@ -25,6 +29,7 @@ class HeroRoute extends BaseRoute {
             skip: Joi.number().integer().default(0),
             limit: Joi.number().integer().default(10),
           }),
+          headers,
         },
       },
 
@@ -57,6 +62,7 @@ class HeroRoute extends BaseRoute {
         notes: "Should register one hero by name and power",
         validate: {
           failAction,
+          headers,
           payload: Joi.object({
             name: Joi.string().required().min(1).max(100),
             power: Joi.string().required().min(1).max(100),
@@ -91,6 +97,7 @@ class HeroRoute extends BaseRoute {
         notes: "Should select one hero by id and update it's data",
         validate: {
           failAction,
+          headers,
           params: Joi.object({
             id: Joi.string().required(),
           }),
@@ -134,6 +141,7 @@ class HeroRoute extends BaseRoute {
         notes: "Should delete one hero id given id is found in the database",
         validate: {
           failAction,
+          headers,
           params: Joi.object({
             id: Joi.string().required(),
           }),
