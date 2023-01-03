@@ -16,6 +16,9 @@ class HeroRoute extends BaseRoute {
       path: "/heroes",
       method: "GET",
       config: {
+        tags: ["api"],
+        description: "Should return a list of all the heroes",
+        notes: "Can paginate and filter by name",
         validate: {
           failAction,
           query: Joi.object({
@@ -49,6 +52,9 @@ class HeroRoute extends BaseRoute {
       path: "/heroes",
       method: "POST",
       config: {
+        tags: ["api"],
+        description: "Should register one hero",
+        notes: "Should register one hero by name and power",
         validate: {
           failAction,
           payload: Joi.object({
@@ -80,6 +86,9 @@ class HeroRoute extends BaseRoute {
       path: "/heroes/{id}",
       method: "PATCH",
       config: {
+        tags: ["api"],
+        description: "Should update one hero",
+        notes: "Should select one hero by id and update it's data",
         validate: {
           failAction,
           params: Joi.object({
@@ -120,6 +129,9 @@ class HeroRoute extends BaseRoute {
       path: "/heroes/{id}",
       method: "DELETE",
       config: {
+        tags: ["api"],
+        description: "Should delete one hero",
+        notes: "Should delete one hero id given id is found in the database",
         validate: {
           failAction,
           params: Joi.object({
