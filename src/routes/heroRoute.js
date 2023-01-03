@@ -1,6 +1,6 @@
 const BaseRoute = require("./base/baseRoute");
 const Joi = require("joi");
-
+const Boom = require("boom");
 const failAction = (request, headers, error) => {
   throw error;
 };
@@ -38,7 +38,7 @@ class HeroRoute extends BaseRoute {
           return this._db.read(name ? query : {}, skip, limit);
         } catch (error) {
           console.log(error);
-          return "Internal server error!!!";
+          return Boom.internal();
         }
       },
     };
@@ -69,7 +69,7 @@ class HeroRoute extends BaseRoute {
           };
         } catch (error) {
           console.log("Error", error);
-          return "Internal Server Error";
+          return Boom.internal();
         }
       },
     };
@@ -102,17 +102,14 @@ class HeroRoute extends BaseRoute {
           const result = await this._db.update(id, data);
 
           if (result.modifiedCount !== 1)
-            return {
-              message: "Could not update hero",
-            };
+            return Boom.preconditionFailed("Id not found in the database");
 
           return {
             message: "Hero updated successfully",
           };
         } catch (error) {
           console.log("Error", error);
-          const errorMessage = "Internal Server Error";
-          return { message: errorMessage };
+          return Boom.internal();
         }
       },
     };
@@ -135,19 +132,15 @@ class HeroRoute extends BaseRoute {
           const { id } = request.params;
           const result = await this._db.delete(id);
 
-          if (result.deletedCount !== 1) {
-            return {
-              message: "Could not delete the hero",
-            };
-          }
+          if (result.deletedCount !== 1)
+            return Boom.preconditionFailed("Id not found in the database");
 
           return {
             message: "Hero removed successfully",
           };
         } catch (error) {
           console.log("error", error);
-          const errorMessage = "Internal Server Error";
-          return { message: errorMessage };
+          Boom.internal();
         }
       },
     };

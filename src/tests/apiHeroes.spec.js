@@ -123,11 +123,15 @@ describe("Api http server", function () {
       payload: JSON.stringify(changes),
     });
 
-    const statusCode = result.statusCode;
     const data = JSON.parse(result.payload);
 
-    expect(statusCode).toEqual(200);
-    expect(data.message).toStrictEqual("Internal Server Error");
+    const expected = {
+      statusCode: 500,
+      error: "Internal Server Error",
+      message: "An internal server error occurred",
+    };
+
+    expect(data).toStrictEqual(expected);
   });
 
   it("should delete one hero in the database", async () => {
@@ -143,5 +147,22 @@ describe("Api http server", function () {
     const data = JSON.parse(result.payload);
     expect(statusCode).toEqual(statusCode);
     expect(data.message).toStrictEqual("Hero removed successfully");
+  });
+  it("should not delete the hero if given id is invalid", async () => {
+    const _id = "63b37ca61c103d1f020aa8dc01";
+
+    const result = await app.inject({
+      method: "DELETE",
+      url: `/heroes/${_id}`,
+    });
+
+    const data = JSON.parse(result.payload);
+    const expected = {
+      statusCode: 500,
+      error: "Internal Server Error",
+      message: "An internal server error occurred",
+    };
+
+    expect(data).toStrictEqual(expected);
   });
 });
