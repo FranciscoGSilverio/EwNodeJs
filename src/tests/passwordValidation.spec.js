@@ -7,6 +7,8 @@ describe("Validate user password with hash", () => {
   it("should generete the hash for the user password", async () => {
     const result = await PasswordHelper.hashPassword(PASSWORD);
 
+    console.log(result);
+
     expect(result.length).toBeGreaterThan(10);
   });
 

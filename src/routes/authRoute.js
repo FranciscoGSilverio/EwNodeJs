@@ -3,6 +3,7 @@ const Joi = require("joi");
 const Boom = require("boom");
 const Jwt = require("jsonwebtoken");
 const PasswordHelper = require("../helpers/passwordHelper");
+
 const failAction = (request, headers, error) => {
   throw error;
 };
@@ -39,11 +40,11 @@ class AuthRoutes extends BaseRoute {
       handler: async (request) => {
         const { username, password } = request.payload;
 
-        // const [user] = await this.db.read({
-        //   username: username.toLowerCase(),
-        // });
+        const [user] = await this.db.read({
+          username: username.toLowerCase(),
+        });
 
-        // if (!user) return Boom.unauthorized("User not found!");
+        if (!user) return Boom.unauthorized("User not found!");
 
         // if (
         //   username.toLowerCase() !== MOCK_USER.username ||
@@ -52,17 +53,17 @@ class AuthRoutes extends BaseRoute {
         //   return Boom.unauthorized();
         // }
 
-        // const match = await PasswordHelper.comparePassword(
-        //   password,
-        //   user.password
-        // );
+        const match = await PasswordHelper.comparePassword(
+          password,
+          user.password
+        );
 
-        // if (!match) return Boom.unauthorized("User or password is incorrect");
+        if (!match) return Boom.unauthorized("User or password is incorrect");
 
         const token = Jwt.sign(
           {
             username: username,
-            id: 1,
+            id: user.id,
           },
           this.secret
         );
@@ -70,6 +71,45 @@ class AuthRoutes extends BaseRoute {
         return {
           token,
         };
+      },
+    };
+  }
+  register() {
+    return {
+      path: "/signup",
+      method: "POST",
+      config: {
+        auth: false,
+        tags: ["api"],
+        description: "Register user",
+        notes: "Sign up to use the api",
+        validate: {
+          failAction,
+          payload: Joi.object({
+            username: Joi.string().required(),
+            password: Joi.string().required(),
+          }),
+        },
+      },
+      handler: async (request) => {
+        const { username, password } = request.payload;
+
+        const [user] = await this.db.read({
+          username: username.toLowerCase(),
+        });
+
+        if (!user) {
+          const NEW_USER = {
+            username: username.toLowerCase(),
+            password: await PasswordHelper.hashPassword(password),
+          };
+
+          await this.db.create(NEW_USER);
+
+          return { message: "User registered successfully" };
+        }
+
+        return Boom.preconditionFailed("User already signedIn");
       },
     };
   }
