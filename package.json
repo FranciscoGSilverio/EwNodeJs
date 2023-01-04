@@ -4,7 +4,9 @@
   "description": "docker run \\  --name postgres \\  -e POSTGRES_USER=franciscogsilverio \\  -e POSTGRES_PASSWORD=secretpassword \\  -e POSTGRES_DB=heroes \\  -p 5432:5432 \\  -d \\  postgres",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "production": "cross-env NODE_ENV=prod npm t",
+    "prod": "cross-env NODE_ENV=prod node api.js"
   },
   "keywords": [],
   "author": "",
@@ -15,6 +17,7 @@
     "@hapi/vision": "^7.0.0",
     "bcrypt": "^5.1.0",
     "boom": "^7.3.0",
+    "dotenv": "^16.0.3",
     "hapi-auth-jwt2": "^10.2.0",
     "hapi-swagger": "^15.0.0",
     "inert": "^5.1.3",
