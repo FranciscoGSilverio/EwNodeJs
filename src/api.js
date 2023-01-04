@@ -5,6 +5,9 @@ const HeroSchema = require("./db/strategies/mongodb/schemas/heroesSchema");
 const HeroRoute = require("./routes/heroRoute");
 const AuthRoute = require("./routes/authRoute");
 
+const Postgres = require("./db/strategies/postgres/postgres");
+const UserSchema = require("./db/strategies/postgres/schemas/userSchema");
+
 const HapiSwagger = require("hapi-swagger");
 const Vision = require("@hapi/vision");
 const Inert = require("@hapi/inert");
@@ -33,8 +36,15 @@ const mapRoutes = (instance, methods) => {
 
 async function main() {
   const app = getServer();
+
   const connection = MongoDb.connect();
   const context = new Context(new MongoDb(connection, HeroSchema));
+
+  const postgresConnection = await Postgres.connect();
+  const userSchema = await Postgres.defineModel(postgresConnection, UserSchema);
+  const postgresContext = new Context(
+    new Postgres(postgresConnection, userSchema)
+  );
 
   const swaggerOptions = {
     info: {
@@ -56,7 +66,13 @@ async function main() {
   app.auth.strategy("jwt", "jwt", {
     key: JWT_SECRET,
 
-    validate: (data, request) => {
+    validate: async (data, request) => {
+      const [result] = await postgresContext.read({
+        username: data.username.toLowerCase(),
+      });
+
+      if (!result) return { isValid: false };
+
       return {
         isValid: true,
       };
@@ -67,7 +83,10 @@ async function main() {
 
   app.route([
     ...mapRoutes(new HeroRoute(context), HeroRoute.methods()),
-    ...mapRoutes(new AuthRoute(JWT_SECRET), AuthRoute.methods()),
+    ...mapRoutes(
+      new AuthRoute(JWT_SECRET, postgresContext),
+      AuthRoute.methods()
+    ),
   ]);
 
   await app.start();
