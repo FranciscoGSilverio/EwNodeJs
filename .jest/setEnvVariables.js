@@ -5,3 +5,4 @@ process.env.MONGO_DB_URL =
   "mongodb://franciscogsilverio:minhasenhasecreta@localhost:27017/heroes";
 process.env.POSTGRES_URL =
   "postgres://franciscogsilverio:secretpassword@localhost/heroes";
+process.env.TESTING = "testing testing";
