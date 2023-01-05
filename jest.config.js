@@ -3,6 +3,12 @@
  * https://jestjs.io/docs/configuration
  */
 
+const rootDir =
+  process.NODE_ENV === "dev"
+    ? "/home/franciscosilverio/myPrograms/NodeJsCourse/multi-db-class/"
+    : "/tmp/build_4cf603a9/";
+console.log("root dir", rootDir);
+
 module.exports = {
   // All imported modules in your tests should be mocked automatically
   // automock: false,
@@ -132,7 +138,7 @@ module.exports = {
   // runner: "jest-runner",
 
   // The paths to modules that run some code to configure or set up the testing environment before each test
-  setupFiles: ["/home/franciscosilverio/myPrograms/NodeJsCourse/multi-db-class/.jest/setEnvVariables.js"],
+  setupFiles: ["/tmp/build_4cf603a9/.jest/setEnvVariables.js"],
 
   // A list of paths to modules that run some code to configure or set up the testing framework before each test
   // setupFilesAfterEnv: [],
