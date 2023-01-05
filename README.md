@@ -2,13 +2,15 @@
 
 <p id="description">A multi-database REST API developed with Node js.</p>
 
+<img src="./Assets/heroImg.png" alt="project-screenshot">
+
 <h2>🚀 Demo</h2>
 
 [https://nodebr-heroes.herokuapp.com/documentation#/](https://nodebr-heroes.herokuapp.com/documentation#/)
 
 <h2>Project Screenshots:</h2>
 
-<img src="./Assets/apiDocumentation.png" alt="project-screenshot" width="400" height="400/">
+<img src="./Assets/apiDocumentation.png" alt="project-screenshot">
 
 <h2>🧐 Features</h2>
 
