@@ -4,9 +4,10 @@
   "description": "docker run \\  --name postgres \\  -e POSTGRES_USER=franciscogsilverio \\  -e POSTGRES_PASSWORD=secretpassword \\  -e POSTGRES_DB=heroes \\  -p 5432:5432 \\  -d \\  postgres",
   "main": "index.js",
   "scripts": {
+    "postinstall": "cross-env NODE_ENV=prod npm t",
     "start": "cross-env NODE_ENV=prod node ./src/api.js",
     "test": "jest",
-    "production": "cross-env NODE_ENV=prod npm t",
+    "production:tests": "cross-env NODE_ENV=prod npm t",
     "prod": "cross-env NODE_ENV=prod node ./src/api.js"
   },
   "keywords": [],
