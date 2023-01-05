@@ -53,3 +53,4 @@ Technologies used in the project:
 - Hapi.js
 - MongoDB
 - PostgresSQL
+- Docker
