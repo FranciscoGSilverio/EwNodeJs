@@ -5,11 +5,12 @@
   "main": "index.js",
   "scripts": {
     "start": "cross-env NODE_ENV=prod node ./src/api.js",
+    "dev": "cross-env NODE_ENV=dev node ./src/api.js",
     "test": "cross-env NODE_ENV=prod jest",
     "production:tests": "cross-env NODE_ENV=prod npm t",
-    "prod": "cross-env NODE_ENV=prod node ./src/api.js",
-    "build": ""
-  },
+    "development:tests": "cross-env NODE_ENV=dev jest",
+    "prod": "cross-env NODE_ENV=prod node ./src/api.js"
+},
   "keywords": [],
   "author": "",
   "license": "ISC",

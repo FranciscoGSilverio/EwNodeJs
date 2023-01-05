@@ -138,7 +138,13 @@ module.exports = {
   // runner: "jest-runner",
 
   // The paths to modules that run some code to configure or set up the testing environment before each test
-  setupFiles: ["/tmp/build_4cf603a9/.jest/setEnvVariables.js"],
+  setupFiles: [
+    `${
+      process.env.NODE_ENV === "dev"
+        ? "/home/franciscosilverio/myPrograms/NodeJsCourse/multi-db-class"
+        : "/tmp/build_4cf603a9"
+    }/.jest/setEnvVariables.js`,
+  ],
 
   // A list of paths to modules that run some code to configure or set up the testing framework before each test
   // setupFilesAfterEnv: [],
