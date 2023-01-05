@@ -1,8 +1,10 @@
 <h1 align="center" id="title">NodeBr - Heroes API</h1>
 
-<p id="description">A multi-database REST API developed with Node js.</p>
+<div align="center" >
+  <p  id="description">A multi-database REST API developed with Node js.</p>
+  <img src="./Assets/heroImg.png" alt="project-screenshot" width="200" hieght="200">
+</div>
 
-<img src="./Assets/heroImg.png" alt="project-screenshot">
 
 <h2>🚀 Demo</h2>
 
