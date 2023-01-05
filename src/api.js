@@ -115,6 +115,8 @@ async function main() {
   console.log("Server up and running");
 
   return app;
+
+  console.log("environment variables:", process.env);
 }
 
 module.exports = main();
