@@ -31,7 +31,7 @@ class MongoDB extends ICrud {
       { useNewUrlParser: true },
       (error) => {
         if (!error) return;
-        console.log("Connection failed", error);
+        console.log("Connection failed:", error);
       }
     );
 
