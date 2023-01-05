@@ -1,44 +1,49 @@
-# EwNodeJs
-Project developed during Erick Wendel's Node Js course
+<h1 align="center" id="title">NodeBr - Heroes API</h1>
 
+<p id="description">A multi-database REST API developed with Node js.</p>
 
-## -- PostgresSQL
-docker run \
- --name postgres \
- -e POSTGRES_USER=franciscogsilverio \
- -e POSTGRES_PASSWORD=secretpassword \
- -e POSTGRES_DB=heroes \
- -p 5432:5432 \
- -d \
- postgres
+<h2>🚀 Demo</h2>
 
- docker ps
- docker exec -it postgres /bin/bash
+[https://nodebr-heroes.herokuapp.com/documentation#/](https://nodebr-heroes.herokuapp.com/documentation#/)
 
-docker run \
-    --name adminer \
-    -p 8080:8080 \
-    --link postgres:postgres \
-    -d \
-    adminer
+<h2>Project Screenshots:</h2>
 
-## --- MongoDB
+<img src="./Assets/apiDocumentation.png" alt="project-screenshot" width="400" height="400/">
 
-sudo docker run \
-    --name mongodb \
-    -p 27017:27017 \
-    -e MONGO_INITDB_ROOT_USERNAME=admin \
-    -e MONGO_INITDB_ROOT_PASSWORD=adminpassword \
-    -d \
-    mongo:4
+<h2>🧐 Features</h2>
 
-sudo docker run \
-    --name mongoclient \
-    -p 3000:3000 \
-    --link mongodb:mongodb \
-    -d \
-    mongoclient/mongoclient
+Here're some of the project's best features:
 
-sudo docker exec -it mongodb \
-    mongo --host localhost -u admin -p adminpassword --authenticationDatabase admin \
-    --eval "db.getSiblingDB('heroes').createUser({user: 'franciscogsilverio', pwd: 'minhasenhasecreta', roles: [{role: 'readWrite', db:'heroes'}]})"
+- JWT Authenticatoin
+- Request validation with Joi
+- Endpoints documentation with Swagger
+- Automated tests
+- Test coverage with Istanbul
+- Pagination
+
+<h2>🛠️ Installation Steps:</h2>
+
+<p>1. Clone the project</p>
+
+```
+git clone https://github.com/FranciscoGSilverio/MultiDbNodeJs.git
+```
+
+<p>2. Install the dependecies</p>
+
+```
+npm install
+```
+
+<p>3. Execute the program</p>
+
+```
+npm start
+```
+
+<h2>💻 Built with</h2>
+
+Technologies used in the project:
+
+- Node.js
+- Hapi.js
