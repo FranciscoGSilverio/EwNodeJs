@@ -8,7 +8,7 @@
 
 <h2>🚀 Demo</h2>
 
-[https://nodebr-heroes.herokuapp.com/documentation#/](https://nodebr-heroes.herokuapp.com/documentation#/)
+Click [here](http://ec2-100-26-161-249.compute-1.amazonaws.com:5000/documentation) to launch the demo.
 
 <h2>Project Screenshots:</h2>
 
@@ -22,7 +22,7 @@ Here're some of the project's best features:
 - Request validation with Joi
 - Endpoints documentation with Swagger
 - Automated tests
-- Test coverage with Istanbul
+- Test coverage with Istanbul. To check the code coverage, go to [/coverage](http://ec2-100-26-161-249.compute-1.amazonaws.com:5000/coverage/)
 - Pagination
 
 <h2>🛠️ Installation Steps:</h2>
