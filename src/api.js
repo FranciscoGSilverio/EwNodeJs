@@ -112,11 +112,10 @@ async function main() {
 
   await app.start();
 
-  console.log("Server up and running");
+  console.log("Server up and running on port " + process.env.PORT);
 
-  console.log("environment variables:", process.env);
+  // console.log("environment variables:", process.env);
   return app;
-
 }
 
 module.exports = main();

@@ -10,7 +10,7 @@
     "production:tests": "cross-env NODE_ENV=prod npm t",
     "development:tests": "cross-env NODE_ENV=dev jest",
     "prod": "cross-env NODE_ENV=prod node ./src/api.js"
-},
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

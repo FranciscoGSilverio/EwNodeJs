@@ -7,7 +7,7 @@ const rootDir =
   process.NODE_ENV === "dev"
     ? "/home/franciscosilverio/myPrograms/NodeJsCourse/multi-db-class/"
     : "/tmp/build_4cf603a9/";
-console.log("root dir", rootDir);
+// console.log("root dir", rootDir);
 
 module.exports = {
   // All imported modules in your tests should be mocked automatically
